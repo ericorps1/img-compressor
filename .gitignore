@@ -11,7 +11,7 @@ __pycache__/
 Thumbs.db
 
 # Carpeta de imágenes comprimidas
-compressed_images/
+imagenes_comprimidas/
 
 # Archivos de log
 *.log
@@ -29,3 +29,6 @@ htmlcov/
 # Archivos de subida temporales
 *.tmp
 *.bak
+
+# Archivos de pruebas
+test.py
