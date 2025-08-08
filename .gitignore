@@ -1,0 +1,31 @@
+# Entorno virtual
+venv/
+.env
+.venv/
+
+# Archivos y carpetas del sistema
+__pycache__/
+*.py[cod]
+*.swp
+.DS_Store
+Thumbs.db
+
+# Carpeta de imágenes comprimidas
+compressed_images/
+
+# Archivos de log
+*.log
+
+# Archivos de configuración de editor
+.vscode/
+.idea/
+
+# Archivos generados por tests o herramientas
+coverage/
+htmlcov/
+*.cover
+*.pyc
+
+# Archivos de subida temporales
+*.tmp
+*.bak
