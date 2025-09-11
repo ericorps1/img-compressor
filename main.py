@@ -2,7 +2,6 @@
 # Fecha: Agosto 8, 2025
 # Especs: Python 3.10.11 (3.10) - instalar dependencias con 'pip install -r requirements.txt' - probar en localhost:8000/img-compressor
 # Autor: Francisco Pineda
-
 # Librerias necesarias
 from fastapi import FastAPI, File, UploadFile
 from fastapi.responses import FileResponse, JSONResponse
@@ -18,7 +17,7 @@ FOLDER_SALIDA = "imagenes_comprimidas"
 os.makedirs(FOLDER_SALIDA, exist_ok=True)
 
 # Especifica la calidad de la imagen comprimida (100 -> sin compresión, 0 -> máxima compresión)
-CALIDAD=50
+CALIDAD = 50
 
 def comprimir_imagen(imagen_archivo, nombre_archivo, formato):
     imagen = Image.open(imagen_archivo)
@@ -34,7 +33,6 @@ def comprimir_imagen(imagen_archivo, nombre_archivo, formato):
     
     return ruta_output
 
-
 @app.post("/img-compressor")
 async def compresor(archivo: UploadFile = File(...)):
     if archivo.content_type not in FORMATOS_SOPORTADOS:
@@ -46,7 +44,6 @@ async def compresor(archivo: UploadFile = File(...)):
                 "message": "Los formatos soportados son: [.jpg, .jpeg, .png]"
             }
         )
-
     try:
         nombre_unico = f"{uuid.uuid4().hex}_{archivo.filename}"
         ruta_archivo_comprimido = comprimir_imagen(archivo.file, nombre_unico, archivo.content_type)
@@ -69,3 +66,14 @@ async def compresor(archivo: UploadFile = File(...)):
                 "message": f"Compression failed: {str(e)}"
             }
         )
+
+# Configuración de uvicorn para archivos grandes
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(
+        "main:app", 
+        host="0.0.0.0", 
+        port=8000, 
+        reload=True,
+        limit_request_field_size=52428800  # 50MB
+    )
